@@ -55,6 +55,14 @@ def get_letter_input():
             return user_input
         print("please try again")
 
+
+def reveal_the_letter(guess, secret_word, hide_word)-> list[str]:
+    for i, letter in enumerate(secret_word):
+        if letter == guess:
+            hide_word[i] = letter
+    return hide_word
+
+
 def game_controller():
     secret_word = random_word()
     print(secret_word) #test
@@ -62,21 +70,21 @@ def game_controller():
     guessed_letters = set()
     hide_word = hidden_word(secret_word)
 
-    while tries_left > 0 or not "_" in hide_word:
+    while tries_left > 0 and "_" in hide_word:
         print("tries left:", tries_left)
         print_the_hidden_word(hide_word)
         guess = get_letter_input()
 
         if guess in secret_word:
             guessed_letters.add(guess)
+            hide_word = reveal_the_letter(guess, secret_word, hide_word)
 
         else:
             tries_left -= 1
 
-
+    if tries_left == 0:
+        print("yoy lose, GAME OVER")
+    else:
+        print("YOU WON")
 if __name__ =="__main__":
     game_controller()
-    # word = random_word()
-    # print(word)
-    # print(hidden_word(word))
-    # get_letter_input()
