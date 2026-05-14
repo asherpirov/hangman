@@ -40,14 +40,19 @@ def print_the_hidden_word(hide_word):
     return None
 
 def validate_input(user_input):
-    return len(user_input) == 1 and user_input.isalpha()
+    if len(user_input) != 1:
+        print("Please try again, write only one letter.")
+        return False
+    elif not user_input.isalpha():
+        print("Please try again, write only letters.")
+        return False
+    return True
 
 def get_letter_input():
     while True:
         user_input = input("Please enter a letter: ")
         if validate_input(user_input):
             return user_input
-        print("Please try again, write only one letter.")
 
 def reveal_the_letter(guess, secret_word, hide_word)-> list[str]:
     for index, letter in enumerate(secret_word):
