@@ -29,20 +29,14 @@ MAX_TRIES = 6
 def random_word():
     return random.choice(WORDS)
 
-
 def hidden_word(word) -> list:
     return list("_" * len(word))
-
-def init():
-    return {"word": random_word(),
-            "tries" : MAX_TRIES,
-            }
 
 def if_guess_word(word, guess):
     return guess in word
 
 def print_the_hidden_word(hide_word):
-    print("the guess word:", "".join(hide_word))
+    print("The guess word:", " ".join(hide_word))
     return None
 
 def validate_input(user_input):
@@ -50,41 +44,44 @@ def validate_input(user_input):
 
 def get_letter_input():
     while True:
-        user_input = input("please enter a letter: ")
+        user_input = input("Please enter a letter: ")
         if validate_input(user_input):
             return user_input
-        print("please try again")
-
+        print("Please try again, write only one letter.")
 
 def reveal_the_letter(guess, secret_word, hide_word)-> list[str]:
-    for i, letter in enumerate(secret_word):
+    for index, letter in enumerate(secret_word):
         if letter == guess:
-            hide_word[i] = letter
+            hide_word[index] = letter
     return hide_word
-
 
 def game_controller():
     secret_word = random_word()
-    print(secret_word) #test
+    # print(secret_word) #test
     tries_left = MAX_TRIES
     guessed_letters = set()
     hide_word = hidden_word(secret_word)
 
     while tries_left > 0 and "_" in hide_word:
-        print("tries left:", tries_left)
+        print("Tries Left:", tries_left)
         print_the_hidden_word(hide_word)
         guess = get_letter_input()
-
-        if guess in secret_word:
-            guessed_letters.add(guess)
+        if guess in guessed_letters:
+            print("You have already chosen this letter.")
+        elif guess in secret_word:
             hide_word = reveal_the_letter(guess, secret_word, hide_word)
 
         else:
             tries_left -= 1
+        guessed_letters.add(guess)
+        print(guessed_letters)
+
 
     if tries_left == 0:
-        print("yoy lose, GAME OVER")
+        print()
+        print(f"YOU LOSE | GAME OVER\nThe hide word is '{secret_word}'")
     else:
         print("YOU WON")
+
 if __name__ =="__main__":
     game_controller()
