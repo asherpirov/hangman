@@ -1,3 +1,4 @@
+"https://github.com/asherpirov/hangman.git"
 import random
 WORDS = [
     "apple", "banana", "orange", "grape", "melon", "water", "house", "table", "chair", "window",
